@@ -5,6 +5,7 @@ import com.stockapi.stock.entity.Tipo;
 import com.stockapi.stock.service.TipoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,13 @@ public class TipoController {
         this.tipoService = tipoService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TipoDTO> findById(@PathVariable Long id){
-        return tipoService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TipoDTO> findById(@PathVariable Long id) {
+        return tipoService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
+
     @GetMapping
     public ResponseEntity<List<TipoDTO>> findAll(){
         List<TipoDTO> tipoDTOS = tipoService.findAll();
