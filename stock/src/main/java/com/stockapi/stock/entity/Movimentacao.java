@@ -1,8 +1,6 @@
 package com.stockapi.stock.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "tb_movimentacao", schema = "public")
@@ -12,10 +10,10 @@ public class Movimentacao extends AbstractEntity{
     private Produto produto;
 
     @Column(name = "cl_produto_entrada", nullable = false)
-    private int entrada;
+    private Integer entrada;
 
     @Column(name = "cl_produto_saida")
-    private int saida;
+    private Integer saida;
 
     @Column(name = "cl_total_produto")
     private int totalProduto;
@@ -24,15 +22,15 @@ public class Movimentacao extends AbstractEntity{
         return produto;
     }
 
-    public int getEntrada() {
+    public Integer getEntrada() {
         return entrada;
     }
 
-    public int getSaida() {
+    public Integer getSaida() {
         return saida;
     }
 
-    public int getTotalProduto() {
+    public Integer getTotalProduto() {
         return totalProduto;
     }
 
@@ -40,15 +38,15 @@ public class Movimentacao extends AbstractEntity{
         this.produto = produto;
     }
 
-    public void setEntrada(int entrada) {
+    public void setEntrada(Integer entrada) {
         this.entrada = entrada;
     }
 
-    public void setSaida(int saida) {
+    public void setSaida(Integer saida) {
         this.saida = saida;
     }
 
-    public void setTotalProduto(int totalProduto) {
+    public void setTotalProduto(Integer totalProduto) {
         this.totalProduto = totalProduto;
     }
 }

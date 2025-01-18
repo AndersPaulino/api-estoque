@@ -12,10 +12,10 @@ public class MovimentacaoDTO {
     private boolean ativo;
     private LocalDateTime registro;
     private LocalDateTime atualizar;
-    private int totalProduto;
+    private Integer totalProduto;
     private Produto produto;
-    private int entrada;
-    private int saida;
+    private Integer entrada;
+    private Integer saida;
 
     public MovimentacaoDTO(Movimentacao movimentacao){
         id = movimentacao.getId();
@@ -27,7 +27,7 @@ public class MovimentacaoDTO {
         totalProduto = movimentacao.getTotalProduto();
     }
 
-    public MovimentacaoDTO(Long id, boolean ativo, LocalDateTime registro, LocalDateTime atualizar, int entrada, int saida, int totalProduto){
+    public MovimentacaoDTO(Long id, boolean ativo, LocalDateTime registro, LocalDateTime atualizar, Integer entrada, Integer saida, Integer totalProduto){
         this.id = id;
         this.ativo = ativo;
         this.registro = registro;
@@ -53,19 +53,19 @@ public class MovimentacaoDTO {
         return atualizar;
     }
 
-    public int getTotalProduto() {
-        return totalProduto;
-    }
-
     public Produto getProduto() {
         return produto;
     }
 
-    public int getEntrada() {
+    public Integer getTotalProduto() {
+        return totalProduto;
+    }
+
+    public Integer getEntrada() {
         return entrada;
     }
 
-    public int getSaida() {
+    public Integer getSaida() {
         return saida;
     }
 }
