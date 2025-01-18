@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_tipo", schema = "public")
 public class Tipo extends AbstractEntity{
 
-    @Column(name = "cl_nome_tipo")
+    @Column(name = "cl_nome_tipo", unique = true)
     private String nomeTipo;
 
     public String getNomeTipo() {
