@@ -89,13 +89,14 @@ public class ProdutoService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public void atualizar(Long id, Produto produto) {
-        validarProduto(produto);
+
         Optional<Produto> produtoExistenteOptional = produtoRepository.findById(id);
 
         if (produtoExistenteOptional.isPresent()) {
             Produto produtoExistente = produtoExistenteOptional.get();
 
             if (produto.getNomeProduto() != null) {
+                validarProduto(produto);
                 produtoExistente.setNomeProduto(produto.getNomeProduto());
             }
 
@@ -105,7 +106,6 @@ public class ProdutoService {
             if (produto.getDescricao() != null) {
                 produtoExistente.setDescricao(produto.getDescricao());
             }
-            produtoExistente.setAtivo(produto.isAtivo());
             produtoRepository.save(produtoExistente);
         } else {
             throw new IllegalArgumentException("ID Inválido!");
