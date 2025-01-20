@@ -89,19 +89,23 @@ public class EstoqueService {
 
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     public void atualizar(Long id, Estoque estoque) {
-        validarEstoque(estoque);
+
         Optional<Estoque> estoqueExistenteOptional = estoqueRepository.findById(id);
 
         if (estoqueExistenteOptional.isPresent()) {
             Estoque estoqueExistente = estoqueExistenteOptional.get();
-            estoqueExistente.setNomeEstoque(estoque.getNomeEstoque());
 
+            if(estoque.getNomeEstoque() != null) {
+                validarEstoque(estoque);
+                estoqueExistente.setNomeEstoque(estoque.getNomeEstoque());
+            }
             if (estoque.getMovimentacao() != null && !estoque.getMovimentacao().isEmpty()) {
                 estoqueExistente.getMovimentacao().clear();
 
                 estoqueExistente.getMovimentacao().addAll(estoque.getMovimentacao());
             }
             estoqueExistente.setAtualizar(LocalDateTime.now());
+
             estoqueRepository.save(estoqueExistente); // Salvar o estoque atualizado
         } else {
             throw new IllegalArgumentException("ID de estoque inválido!");
