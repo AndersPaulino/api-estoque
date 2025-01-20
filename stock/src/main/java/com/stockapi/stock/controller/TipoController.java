@@ -71,7 +71,7 @@ public class TipoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PutMapping("/nome/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody Tipo tipo) {
         try {
             tipoService.atualizar(id, tipo);

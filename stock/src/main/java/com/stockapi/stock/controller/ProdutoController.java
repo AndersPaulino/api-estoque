@@ -2,11 +2,13 @@ package com.stockapi.stock.controller;
 
 import com.stockapi.stock.dto.ProdutoDTO;
 import com.stockapi.stock.entity.Produto;
+import com.stockapi.stock.entity.Tipo;
 import com.stockapi.stock.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -103,7 +105,7 @@ public class ProdutoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PutMapping("/nome/{id}")
+    @PutMapping("/atualizar/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody Produto produto) {
         try {
             produtoService.atualizar(id, produto);

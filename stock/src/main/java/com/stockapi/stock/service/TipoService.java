@@ -87,8 +87,9 @@ public class TipoService {
 
         if (tipoOptional.isPresent()) {
             Tipo tipoExistente = tipoOptional.get();
-            tipoExistente.setAtivo(tipo.isAtivo());
+
             tipoExistente.setNomeTipo(tipo.getNomeTipo());
+
             tipoRepository.save(tipoExistente);
         } else {
             throw new IllegalArgumentException("ID de tipo inválido!");

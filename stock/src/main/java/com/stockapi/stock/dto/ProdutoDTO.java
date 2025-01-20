@@ -2,7 +2,6 @@ package com.stockapi.stock.dto;
 
 import com.stockapi.stock.entity.Produto;
 import com.stockapi.stock.entity.Tipo;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
@@ -15,8 +14,7 @@ public class ProdutoDTO {
     private LocalDateTime atualizar;
     private String nomeProduto;
     private String descricao;
-    private String codigo;
-    private Tipo tipo;
+    private Long tipo;
 
     public ProdutoDTO(Produto produto){
         id = produto.getId();
@@ -25,7 +23,7 @@ public class ProdutoDTO {
         atualizar = produto.getAtualizar();
         nomeProduto = produto.getNomeProduto();
         descricao = produto.getDescricao();
-        tipo = produto.getTipo();
+        tipo = produto.getTipo().getId();
     }
 
     public ProdutoDTO(Long id, boolean ativo, LocalDateTime registro, LocalDateTime atualizar, String nomeProduto, String descricao, Tipo tipo){
@@ -35,7 +33,7 @@ public class ProdutoDTO {
         this.atualizar = atualizar;
         this.nomeProduto = nomeProduto;
         this.descricao = descricao;
-        this.tipo = tipo;
+        this.tipo = tipo.getId();
     }
 
     public Long getId() {
@@ -62,11 +60,7 @@ public class ProdutoDTO {
         return descricao;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public Tipo getTipo() {
+    public Long getTipo() {
         return tipo;
     }
 }
