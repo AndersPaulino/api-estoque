@@ -2,11 +2,15 @@ package com.stockapi.stock.service;
 
 import com.stockapi.stock.dto.ProdutoDTO;
 import com.stockapi.stock.entity.Produto;
+import com.stockapi.stock.entity.Tipo;
 import com.stockapi.stock.repository.ProdutoRepository;
+import com.stockapi.stock.repository.TipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,10 +20,12 @@ import java.util.Optional;
 public class ProdutoService {
 
     private ProdutoRepository produtoRepository;
+    private TipoRepository tipoRepository;
 
     @Autowired
-    public ProdutoService (ProdutoRepository produtoRepository) {
+    public ProdutoService (ProdutoRepository produtoRepository, TipoRepository tipoRepository) {
         this.produtoRepository = produtoRepository;
+        this.tipoRepository = tipoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -76,6 +82,8 @@ public class ProdutoService {
     @Transactional(rollbackFor = Exception.class)
     public void cadastrar(Produto produto){
         validarProduto(produto);
+        Tipo tipo = tipoRepository.findById(produto.getTipo().getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo não encontrado"));
+        produto.setTipo(tipo);
         produtoRepository.save(produto);
     }
 
