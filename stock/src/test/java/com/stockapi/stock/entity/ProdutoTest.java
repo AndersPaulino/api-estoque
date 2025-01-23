@@ -10,10 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ProdutoTest {
 
     private Produto produto;
+    private Tipo tipo;
 
     @BeforeEach
     void setUp() {
         produto = new Produto();
+        tipo = new Tipo();
+
+        tipo.setNomeTipo("nome");
+        produto.setTipo(tipo);
     }
 
     @Test
@@ -43,5 +48,7 @@ public class ProdutoTest {
         assertEquals(produto.getRegistro().toLocalDate(), LocalDateTime.now().minusDays(1).toLocalDate(), "A data de registro não corresponde");
         assertNotNull(produto.getAtualizar(),  "O campo 'atualizar' não deve ser nulo");
         assertEquals("nome teste", produto.getNomeProduto(), "O nome do produto não foi definido corretamente");
+        assertEquals("nome", produto.getTipo().getNomeTipo(), "O nome do tipo não foi definido corretamente");
+        assertEquals("nova descricao", produto.getDescricao(), "A descricao não foi definida corretamente");
     }
 }
