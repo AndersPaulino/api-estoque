@@ -24,6 +24,14 @@ public class ProdutoTest {
     }
 
     @Test
+    void testPreUpdate() {
+        LocalDateTime predate = produto.getAtualizar();
+        produto.preUpdate();
+        assertNotNull(produto.getAtualizar(), "Atualizar não deve ser nulo após preUpdate");
+        assertNotEquals(predate, produto.getAtualizar(), "O valor de 'atualizar' deve ser diferente após preUpdate");
+    }
+
+    @Test
     void testSettersAndGetters() {
         produto.setAtivo(false);
         produto.setNomeProduto("nome teste");
