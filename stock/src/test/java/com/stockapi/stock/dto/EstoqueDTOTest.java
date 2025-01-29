@@ -5,9 +5,13 @@ import com.stockapi.stock.entity.Movimentacao;
 import com.stockapi.stock.entity.Produto;
 import com.stockapi.stock.entity.Tipo;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EstoqueDTOTest {
 
@@ -33,5 +37,24 @@ public class EstoqueDTOTest {
 
         estoque = new Estoque();
         estoque.setMovimentacao(movimentacao);
+        estoque.setNomeEstoque("Estoque");
+        estoqueDTO = new EstoqueDTO(estoque);
+    }
+
+    @Test
+    void testConstructorWithEstoque(){
+        assertEquals(estoque.getId(), estoqueDTO.getId());
+        assertEquals(estoque.getNomeEstoque(), estoqueDTO.getNomeEstoque());
+        assertEquals(estoque.getMovimentacao(), estoqueDTO.getMovimentacao());
+        assertEquals(estoque.getAtualizar(), estoqueDTO.getAtualizar());
+        assertEquals(estoque.getRegistro(), estoqueDTO.getRegistro());
+        assertEquals(estoque.isAtivo(), estoqueDTO.isAtivo());
+    }
+
+    @Test
+    void testConstructorWithIndividualParameters(){
+        EstoqueDTO estoqueDTO1 = new EstoqueDTO(1L, true, LocalDateTime.now(), LocalDateTime.now(), "Estoque",movimentacao);
+
+
     }
 }
