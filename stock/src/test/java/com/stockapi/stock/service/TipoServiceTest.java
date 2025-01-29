@@ -107,4 +107,15 @@ public class TipoServiceTest {
 
         verify(tipoRepository, times(1)).save(tipo);
     }
+
+    @Test
+    void testAtualizarIdAndTipoExists(){
+        tipo.setNomeTipo("Tipo1");
+
+        when(tipoRepository.findById(1L)).thenReturn(Optional.of(new Tipo()));
+
+        assertDoesNotThrow(() -> tipoService.atualizar(1L, tipo));
+
+        verify(tipoRepository, times(1)).save(any(Tipo.class));
+    }
 }
