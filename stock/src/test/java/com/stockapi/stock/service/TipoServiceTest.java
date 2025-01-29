@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TipoServiceTest {
@@ -95,5 +95,16 @@ public class TipoServiceTest {
                 });
 
         assertEquals("Nome do Tipo inválido!", exception1.getMessage());
+    }
+
+    @Test
+    void testCadastrarTipo(){
+        tipo.setNomeTipo("Tipo1");
+
+        when(tipoRepository.save(tipo)).thenReturn(tipo);
+
+        assertDoesNotThrow(() -> tipoService.cadastrar(tipo));
+
+        verify(tipoRepository, times(1)).save(tipo);
     }
 }
