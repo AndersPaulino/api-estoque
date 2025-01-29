@@ -127,4 +127,17 @@ public class TipoServiceTest {
 
         verify(tipoRepository, never()).save(any(Tipo.class));
     }
+
+    @Test
+    void testThrowExceptionIdDoesNotExist(){
+        tipo.setNomeTipo("NovoTipo");
+
+        when(tipoRepository.findById(2L)).thenReturn(Optional.empty());
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class,  () -> tipoService.atualizar(2L,tipo));
+
+        assertEquals("ID de tipo inválido!", e.getMessage());
+
+        verify(tipoRepository, never()).save(any(Tipo.class));
+    }
 }
