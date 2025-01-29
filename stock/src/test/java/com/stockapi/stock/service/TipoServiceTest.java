@@ -158,4 +158,13 @@ public class TipoServiceTest {
 
         assertFalse(tipo.isAtivo());
     }
+
+    @Test
+    void testDeletarThrowExceptionIdDoesNotExist(){
+        when(tipoRepository.findById(2L)).thenReturn(Optional.empty());
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, ()-> tipoService.deletar(2L));
+
+        assertEquals("ID de tipo inválido!", e.getMessage());
+    }
 }
