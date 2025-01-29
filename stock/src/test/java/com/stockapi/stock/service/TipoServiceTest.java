@@ -167,4 +167,15 @@ public class TipoServiceTest {
 
         assertEquals("ID de tipo inválido!", e.getMessage());
     }
+
+    @Test
+    void testDeletarWhenTipoIsAlreadyInactive(){
+        Tipo tipo1 = new Tipo();
+        tipo1.setAtivo(false);
+
+        when(tipoRepository.findById(1L)).thenReturn(Optional.of(tipo1));
+
+        tipoService.deletar(1L);
+        assertFalse(tipo1.isAtivo());
+    }
 }
