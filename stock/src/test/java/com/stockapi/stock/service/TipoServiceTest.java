@@ -118,4 +118,13 @@ public class TipoServiceTest {
 
         verify(tipoRepository, times(1)).save(any(Tipo.class));
     }
+
+    @Test
+    void testThrowExceptionInvalidTipo(){
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> tipoService.atualizar(1L, tipo));
+
+        assertEquals("ID de tipo inválido!", e.getMessage());
+
+        verify(tipoRepository, never()).save(any(Tipo.class));
+    }
 }
