@@ -10,8 +10,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 
@@ -44,5 +48,16 @@ public class TipoServiceTest {
         Optional<TipoDTO> result = tipoService.findById(id);
 
         assertFalse(result.isPresent());
+    }
+
+    @Test
+    void findByAtivoReturnTipoDTOs(){
+        List<Tipo> tipoList = Stream.of(new Tipo()).collect(Collectors.toList());
+
+        when(tipoRepository.findAll()).thenReturn(tipoList);
+
+        List<TipoDTO> result = tipoService.findAll();
+
+        assertEquals(tipoList.size(), result.size());
     }
 }
