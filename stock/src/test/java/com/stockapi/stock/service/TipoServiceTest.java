@@ -66,4 +66,34 @@ public class TipoServiceTest {
 
         assertDoesNotThrow(() -> tipoService.validarTipo(tipo));
     }
+
+    @Test
+    void testValidarTipoIsNull(){
+        Tipo tipo1 = new Tipo();
+
+        Tipo tipo2 = new Tipo();
+
+        tipo.setNomeTipo(null);
+
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> tipoService.validarTipo(tipo));
+
+        assertEquals("Nome do Tipo não informado!", e.getMessage());
+
+        tipo1.setNomeTipo("");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            tipoService.validarTipo(tipo1);
+        });
+
+        assertEquals("Nome do Tipo não informado!", exception.getMessage());
+
+        tipo2.setNomeTipo("Estoque@");
+
+        IllegalArgumentException exception1 = assertThrows(IllegalArgumentException.class,
+                () -> {
+                    tipoService.validarTipo(tipo2);
+                });
+
+        assertEquals("Nome do Tipo inválido!", exception1.getMessage());
+    }
 }
