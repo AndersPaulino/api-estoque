@@ -140,4 +140,13 @@ public class TipoServiceTest {
 
         verify(tipoRepository, never()).save(any(Tipo.class));
     }
+
+    @Test
+    void tesstCadastrar(){
+        tipo.setNomeTipo("Nome");
+
+        tipoService.cadastrar(tipo);
+
+        verify(tipoRepository, times(1)).save(tipo);
+    }
 }
