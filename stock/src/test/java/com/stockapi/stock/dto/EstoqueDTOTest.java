@@ -55,6 +55,9 @@ public class EstoqueDTOTest {
     void testConstructorWithIndividualParameters(){
         EstoqueDTO estoqueDTO1 = new EstoqueDTO(1L, true, LocalDateTime.now(), LocalDateTime.now(), "Estoque",movimentacao);
 
-
+        assertEquals(1L, estoqueDTO1.getId());
+        assertEquals("Estoque", estoqueDTO1.getNomeEstoque());
+        assertEquals(movimentacao, estoqueDTO1.getMovimentacao());
+        assertEquals(true, estoqueDTO1.isAtivo());
     }
 }
