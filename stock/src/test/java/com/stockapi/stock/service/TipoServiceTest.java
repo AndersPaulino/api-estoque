@@ -15,8 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -59,5 +58,12 @@ public class TipoServiceTest {
         List<TipoDTO> result = tipoService.findAll();
 
         assertEquals(tipoList.size(), result.size());
+    }
+
+    @Test
+    void testValidarTipo(){
+        tipo.setNomeTipo("Tipo1");
+
+        assertDoesNotThrow(() -> tipoService.validarTipo(tipo));
     }
 }
