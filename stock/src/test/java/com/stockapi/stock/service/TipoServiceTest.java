@@ -149,4 +149,13 @@ public class TipoServiceTest {
 
         verify(tipoRepository, times(1)).save(tipo);
     }
+
+    @Test
+    void testDeletarIdExist(){
+        when(tipoRepository.findById(1L)).thenReturn(Optional.of(tipo));
+
+        assertDoesNotThrow(()-> tipoService.deletar(1L));
+
+        assertFalse(tipo.isAtivo());
+    }
 }
