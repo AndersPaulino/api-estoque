@@ -18,9 +18,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MovimentacaoServiceTest {
@@ -107,5 +106,17 @@ public class MovimentacaoServiceTest {
         List<MovimentacaoDTO> result = movimentacaoService.findByDiaAtualizar(atualizar);
 
         assertEquals(movimentacaoList.size(), result.size());
+    }
+
+    @Test
+    void testAtualizar(){
+        movimentacao.setEntrada(5);
+        movimentacao.setSaida(2);
+
+        when(movimentacaoRepository.findById(1L)).thenReturn(Optional.of(movimentacao));
+
+        assertDoesNotThrow(() -> movimentacaoService.atualizar(1L, movimentacao));
+
+        verify(movimentacaoRepository, times(1)).save(any(Movimentacao.class));
     }
 }
