@@ -203,4 +203,14 @@ public class ProdutoServiceTest {
 
         verify(produtoRepository, times(1)).save(any(Produto.class));
     }
+
+    @Test
+    void testAtualizarException(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> produtoService.atualizar(1L, produto));
+
+        assertEquals("ID Inválido!", exception.getMessage());
+
+        verify(produtoRepository, never()).save(any(Produto.class));
+    }
 }
