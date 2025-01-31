@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,5 +138,23 @@ public class ProdutoServiceTest {
         List<ProdutoDTO> produtoDTOS = produtoService.findByAtivo(true);
 
         assertEquals(produtoDTOS.size(),produtos.size());
+    }
+
+    @Test
+    void testFindByDiaRegistro(){
+        List<Produto> produtos = new ArrayList<>();
+        Produto produto1 = new Produto();
+
+        produto1.setTipo(tipo);
+        produto.setTipo(tipo);
+
+        produtos.add(produto1);
+        produtos.add(produto);
+
+        when(produtoRepository.findByDiaRegistro(LocalDate.now())).thenReturn(produtos);
+
+        List<ProdutoDTO> produtoDTOS = produtoService.findByDiaRegistro(LocalDate.now());
+
+        assertEquals(produtos.size(),produtoDTOS.size());
     }
 }
