@@ -213,4 +213,16 @@ public class ProdutoServiceTest {
 
         verify(produtoRepository, never()).save(any(Produto.class));
     }
+
+    @Test
+    void testDeletarIdInvalido(){
+        when(produtoRepository.findById(2L)).thenReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                ()-> produtoService.deletar(2L));
+
+        assertEquals("ID Invalido", exception.getMessage());
+
+        verify(produtoRepository, never()).save(any(Produto.class));
+    }
 }
