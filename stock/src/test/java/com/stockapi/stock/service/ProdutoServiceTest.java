@@ -119,4 +119,23 @@ public class ProdutoServiceTest {
 
         assertThat(exception2.getMessage()).isEqualTo("Nome De Produto Não Preenchido");
     }
+
+    @Test
+    void testFindByAtivo(){
+        List<Produto> produtos = new ArrayList<>();
+
+        Produto produto1 = new Produto();
+
+        produto1.setTipo(tipo);
+        produto.setTipo(tipo);
+
+        produtos.add(produto1);
+        produtos.add(produto);
+
+        when(produtoRepository.findByAtivo(true)).thenReturn(produtos);
+
+        List<ProdutoDTO> produtoDTOS = produtoService.findByAtivo(true);
+
+        assertEquals(produtoDTOS.size(),produtos.size());
+    }
 }
