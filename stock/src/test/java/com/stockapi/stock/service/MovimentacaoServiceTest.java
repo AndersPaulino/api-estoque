@@ -95,4 +95,17 @@ public class MovimentacaoServiceTest {
 
         assertEquals(movimentacaoList.size(), result.size());
     }
+
+    @Test
+    void testFindByDiaAtualizar(){
+        LocalDate atualizar = LocalDate.now();
+        List<Movimentacao> movimentacaoList = Stream.of(new Movimentacao(), new Movimentacao())
+                .collect(Collectors.toList());
+
+        when(movimentacaoRepository.findByDiaAtualizar(atualizar)).thenReturn(movimentacaoList);
+
+        List<MovimentacaoDTO> result = movimentacaoService.findByDiaAtualizar(atualizar);
+
+        assertEquals(movimentacaoList.size(), result.size());
+    }
 }
