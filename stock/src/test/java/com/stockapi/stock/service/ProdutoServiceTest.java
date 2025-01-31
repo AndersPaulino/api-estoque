@@ -12,6 +12,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -61,5 +66,25 @@ public class ProdutoServiceTest {
         assertNotNull(produtoDTO1);
 
         assertEquals(nome, produtoDTO1.getNomeProduto());
+    }
+
+    @Test
+    void testFindAll(){
+        produto.setTipo(tipo);
+
+        Produto produto1 = new Produto();
+
+        produto1.setTipo(tipo);
+
+        List<Produto> produtos = new ArrayList<>();
+
+        produtos.add(produto1);
+        produtos.add(produto);
+
+        when(produtoRepository.findAll()).thenReturn(produtos);
+
+        List<ProdutoDTO> produtoDTOS = produtoService.findAll();
+
+        assertEquals(produtos.size(), produtoDTOS.size());
     }
 }
