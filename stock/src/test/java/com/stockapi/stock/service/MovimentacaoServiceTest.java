@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,5 +83,16 @@ public class MovimentacaoServiceTest {
         assertEquals(movimentacaoList.size(), result.size());
     }
 
+    @Test
+    void testFindByDiaRegistro(){
+        LocalDate registro = LocalDate.now();
+        List<Movimentacao> movimentacaoList = Stream.of(new Movimentacao(), new Movimentacao())
+                .collect(Collectors.toList());
 
+        when(movimentacaoRepository.findByDiaRegistro(registro)).thenReturn(movimentacaoList);
+
+        List<MovimentacaoDTO> result = movimentacaoService.findByDiaRegistro(registro);
+
+        assertEquals(movimentacaoList.size(), result.size());
+    }
 }
