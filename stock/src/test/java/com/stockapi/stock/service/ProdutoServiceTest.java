@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -156,5 +157,31 @@ public class ProdutoServiceTest {
         List<ProdutoDTO> produtoDTOS = produtoService.findByDiaRegistro(LocalDate.now());
 
         assertEquals(produtos.size(),produtoDTOS.size());
+    }
+
+    @Test
+    void testFindByDiaAtualizar(){
+        List<Produto> produtos = new ArrayList<>();
+        Produto produto1 = new Produto();
+
+        produto1.setTipo(tipo);
+        produto.setTipo(tipo);
+
+        produto.setAtualizar(LocalDateTime.of(2012,12,30,0,0,0));
+        produto1.setAtualizar(LocalDateTime.now());
+
+        produtos.add(produto1);
+        produtos.add(produto);
+
+        when(produtoRepository.findByDiaAtualizar(LocalDate.now()))
+                .thenReturn(produtos.stream()
+                        .filter(p -> p.getAtualizar().toLocalDate().equals(LocalDate.now()))
+                        .collect(Collectors.toList())
+                );
+
+        List<ProdutoDTO> produtoDTOS = produtoService.findByDiaAtualizar(LocalDate.now());
+
+        assertEquals(1,produtoDTOS.size());
+        assertEquals(2,produtos.size());
     }
 }
