@@ -109,6 +109,18 @@ public class MovimentacaoServiceTest {
     }
 
     @Test
+    void testCadastrar(){
+        movimentacao.setEntrada(5);
+        movimentacao.setSaida(2);
+
+        when(movimentacaoRepository.save(movimentacao)).thenReturn(movimentacao);
+
+        assertDoesNotThrow(() -> movimentacaoService.cadastrar(movimentacao));
+
+        verify(movimentacaoRepository, times(1)).save(movimentacao);
+    }
+
+    @Test
     void testAtualizar(){
         movimentacao.setEntrada(5);
         movimentacao.setSaida(2);
