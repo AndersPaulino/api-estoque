@@ -11,17 +11,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProdutoServiceTest {
@@ -46,6 +45,7 @@ public class ProdutoServiceTest {
         produtoService = new ProdutoService(produtoRepository, tipoRepository);
 
         tipo = new Tipo();
+        tipo.setNomeTipo("Tipo");
 
         produto = new Produto();
         produto.setTipo(tipo);
@@ -183,5 +183,42 @@ public class ProdutoServiceTest {
 
         assertEquals(1,produtoDTOS.size());
         assertEquals(2,produtos.size());
+    }
+
+    @Test
+    void testAtualizar(){
+        Produto produto1 = new Produto();
+        produto1.setNomeProduto("nome");
+
+        Tipo tipo1 = new Tipo();
+        produto1.setTipo(tipo1);
+
+        when(produtoRepository.findById(1L)).thenReturn(Optional.of(new Produto()));
+
+        assertDoesNotThrow(()-> produtoService.atualizar(1L, produto1));
+
+        verify(produtoRepository, times(1)).save(any(Produto.class));
+    }
+
+    @Test
+    void testAtualizarException(){
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> produtoService.atualizar(1L, produto));
+
+        assertEquals("ID Inválido!", exception.getMessage());
+
+        verify(produtoRepository, never()).save(any(Produto.class));
+    }
+
+    @Test
+    void testDeletarIdInvalido(){
+        when(produtoRepository.findById(2L)).thenReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                ()-> produtoService.deletar(2L));
+
+        assertEquals("ID Invalido", exception.getMessage());
+
+        verify(produtoRepository, never()).save(any(Produto.class));
     }
 }
