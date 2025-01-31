@@ -131,4 +131,13 @@ public class MovimentacaoServiceTest {
 
         verify(movimentacaoRepository, times(1)).save(any(Movimentacao.class));
     }
+
+    @Test
+    void testDeletar() {
+        when(movimentacaoRepository.findById(1L)).thenReturn(Optional.of(movimentacao));
+
+        assertDoesNotThrow(() -> movimentacaoService.deletar(1L));
+
+        assertFalse(movimentacao.isAtivo());
+    }
 }
