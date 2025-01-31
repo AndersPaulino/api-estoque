@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -86,5 +86,37 @@ public class ProdutoServiceTest {
         List<ProdutoDTO> produtoDTOS = produtoService.findAll();
 
         assertEquals(produtos.size(), produtoDTOS.size());
+    }
+
+    @Test
+    void testValidarProduto() {
+        produto.setTipo(tipo);
+        produto.setNomeProduto(null);
+
+        Produto produto1 = new Produto();
+        produto1.setTipo(tipo);
+        produto1.setNomeProduto("Nome Inválido!@#");
+
+        Produto produto2 = new Produto();
+        produto2.setTipo(tipo);
+        produto2.setNomeProduto("");
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()->{
+            produtoService.validarProduto(produto);
+        });
+
+        assertThat(exception.getMessage()).isEqualTo("Nome De Produto Não Preenchido");
+
+        IllegalArgumentException exception1 = assertThrows(IllegalArgumentException.class, ()->{
+            produtoService.validarProduto(produto1);
+        });
+
+        assertThat(exception1.getMessage()).isEqualTo("Nome De Produto Invalido");
+
+        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, ()->{
+            produtoService.validarProduto(produto2);
+        });
+
+        assertThat(exception2.getMessage()).isEqualTo("Nome De Produto Não Preenchido");
     }
 }
