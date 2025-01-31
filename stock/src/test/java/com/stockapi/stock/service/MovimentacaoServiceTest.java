@@ -69,6 +69,18 @@ public class MovimentacaoServiceTest {
         assertEquals(movimentacaoList.size(), result.size());
     }
 
+    @Test
+    void testFindByAtivo(){
+        boolean ativo = true;
+        List<Movimentacao> movimentacaoList = Stream.of(new Movimentacao(), new Movimentacao())
+                .collect(Collectors.toList());
+
+        when(movimentacaoRepository.findByAtivo(ativo)).thenReturn(movimentacaoList);
+
+        List<MovimentacaoDTO> result = movimentacaoService.findByAtivo(ativo);
+
+        assertEquals(movimentacaoList.size(), result.size());
+    }
 
 
 }
