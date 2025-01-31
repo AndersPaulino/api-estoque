@@ -12,8 +12,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +55,18 @@ public class MovimentacaoServiceTest {
         Optional<MovimentacaoDTO> result = movimentacaoService.findById(id);
 
         assertFalse(result.isPresent());
+    }
+
+    @Test
+    void testFindAll(){
+        List<Movimentacao> movimentacaoList = Stream.of(new Movimentacao(), new Movimentacao())
+                .collect(Collectors.toList());
+
+        when(movimentacaoRepository.findAll()).thenReturn(movimentacaoList);
+
+        List<MovimentacaoDTO> result = movimentacaoService.findAll();
+
+        assertEquals(movimentacaoList.size(), result.size());
     }
 
 
